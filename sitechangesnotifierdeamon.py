@@ -20,7 +20,7 @@
 
 import argparse
 import csv
-import urllib.request
+import requests
 import time
 import smtplib
 import configparser
@@ -31,11 +31,8 @@ config.read('config.ini')
 def check(name, url):
     with open(config['paths']['sites'] + name + '.txt', 'r') as f:
         oldata = f.read()
-        web = urllib.request.urlopen(url)
-        try:
-            data = web.read().decode('utf-8')
-        except UnicodeDecodeError:
-            data = web.read().decode('Windows-1252')
+        web = requests.Session()
+        data = web.get(url).text
         if data == oldata:
             print('Site %s not changed' % (name))
             return
@@ -59,6 +56,7 @@ def notify(name):
     msg['body'] = (('From: %s\r\nSubject: %s\r\nTo: %s\r\n\r\n' + config['email']['body']) % (msg['from'], msg['subject'], msg['to']))
     server.sendmail(msg=msg['body'], from_addr=msg['from'], to_addrs=msg['to'])
     server.close()
+    
     return
 
 argParse = argparse.ArgumentParser(description='sitechangesnotification deamon', prog='a deamon to notify changes')

@@ -20,7 +20,7 @@
 
 import argparse
 import csv
-import urllib.request
+import requests
 import os
 import configparser
 
@@ -79,11 +79,8 @@ if args.command == "add":
     dbw.writerow([args.name, args.interval, args.url])
     
     with open(config['paths']['sites'] + args.name + ".txt", "w") as html:
-        web = urllib.request.urlopen(args.url)
-        try:
-            data = web.read().decode('utf-8')
-        except UnicodeDecodeError:
-            data = web.read().decode("Windows-1252")
+        web = requests.Session()
+        data = web.get(args.url).text
         html.writelines(data)
 
 elif args.command == "del":

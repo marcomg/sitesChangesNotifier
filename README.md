@@ -3,9 +3,9 @@ README
 
 What is siteChangesNotifier?
 --------------
-Let's strart from beginning: why i wrote this code?
+Let's strart from the beginning: why I wrote this code?
 
-Simply: I am a university student and I did not want to check every minute the sites of my teachers if they had published marks of exams.
+Simply: I am an university student and I did not want to check every minute the sites of my teachers if they had published marks of exams.
 
 So siteChangesNitifier is a python3 script developed to check if a website is changed. If the site is changed it will send you an email!
 
@@ -18,7 +18,8 @@ My teachers uses only obsolete websites (like 1997) so I never had this problem.
 How install
 -----------
 What you need:
- * Python3
+ * python3
+ * python3-requests
 
 You have 2 scripts and 1 config file.
 
