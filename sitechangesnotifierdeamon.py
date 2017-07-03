@@ -31,8 +31,12 @@ config.read('config.ini')
 def check(name, url):
     with open(config['paths']['sites'] + name + '.txt', 'r') as f:
         oldata = f.read()
-        web = requests.Session()
-        data = web.get(url).text
+        try:
+            web = requests.Session()
+            data = web.get(url).text
+        except requests.exceptions.ConnectionError:
+            print("Connection refused, pass")
+            return
         if data == oldata:
             print('Site %s not changed' % (name))
             return
